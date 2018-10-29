@@ -72,6 +72,7 @@ $.ajax({
     		}
 		}
 
+		// Clones the data to airObject (array)
 			for(i=0; i<data.length; i++){
 			
 				var newAir = new Air(data[i].activity_period, data[i].activity_type_code, data[i].boarding_area, data[i].geo_region, data[i].geo_summary, data[i].operating_airline, data[i].passenger_count, data[i].terminal)
@@ -79,9 +80,25 @@ $.ajax({
 				this.airObject.push(newAir);
 
 			}
+
+			// Dynamic sort function
+			function sortBy(someObjArray, prop){
+				someObjArray.sort(
+					function(a,b){
+						  if (a[prop].toUpperCase() > b[prop].toUpperCase()){
+						  	 return 1;
+						  }else {
+						    return -1;
+						}
+					}
+				);
+				return someObjArray;
+			}
+
+			var func = sortBy(this.airObject, "operating_airline");
 		
 
-		console.log(this.airObject);
+		console.log(func);
 
 
 		// Clone the data to a newObject, then sort that object and pull info from it. 
