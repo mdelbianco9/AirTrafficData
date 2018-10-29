@@ -102,7 +102,15 @@ $.ajax({
 			var list_1 = document.getElementById('list_1');
 			list_1.appendChild(createLi);
 
-			var newAir = new Air(this.airLineNames[i], "4567");
+			var createP = document.createElement('P');
+			createP.textContent = 'Between 2005 and 2006 ' + this.airLineNames[i] + ' flew ' + this.passengers[i] + ' passengers to and from SFO.';
+			createP.className = 'list_p';
+			createLi.appendChild(createP);
+
+
+
+			// Creates new constructor
+			var newAir = new Air(this.airLineNames[i], this.passengers[i]);
 			this.airObject.push(newAir);
 
 
@@ -114,6 +122,9 @@ $.ajax({
 			liTags[i].onclick = function(){
 				var li = this;
     			li.classList.toggle("expand");
+    			var p = this.children[0];
+    			p.classList.toggle("show");
+
     		}
 		}
 

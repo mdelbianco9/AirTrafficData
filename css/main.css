@@ -75,4 +75,14 @@
 	/*border-left: 8px solid #cea243;*/
 }
 
+.list_p{
+	display: none;
+	transition: all .5s ease-in-out;
+}
+
+.show{
+	display: block;
+	transition: all .5s ease-in-out;
+}
+
 
