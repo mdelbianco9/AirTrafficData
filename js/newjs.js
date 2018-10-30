@@ -13,6 +13,8 @@ $.ajax({
 
 	airObject: [],
 
+	passengerCounts: [],
+
 	/* Get needed data, create a constructor of it. Then Display data neatly in the document*/
 
 	success: function(data){
@@ -31,7 +33,7 @@ $.ajax({
 		};
 
 		for(i=0; i<data.length; i++){
-			this.airLines.push(data[i].operating_airline);
+			this.airLines.push(data[i].operating_airline.toLowerCase());
 
 		}
 
@@ -51,7 +53,7 @@ $.ajax({
 
 		
 		// Goes through Airline data and Appends list elements to Document
-		for(i=0; i<this.airLineNames.length; i++){
+		for(i=0; i<this.airLineNames.length-1; i++){
 			// Creates and Appends to Document
 			var createLi = document.createElement('LI');
 			createLi.textContent = this.airLineNames[i];
@@ -66,8 +68,6 @@ $.ajax({
 			liTags[i].onclick = function(){
 				var li = this;
     			li.classList.toggle("expand");
-    			var p = this.children[0];
-    			p.classList.toggle("show");
 
     		}
 		}
@@ -95,10 +95,37 @@ $.ajax({
 				return someObjArray;
 			}
 
-			var func = sortBy(this.airObject, "operating_airline");
-		
+			// Sorts airObject by Name of airline.
+			this.airObject = sortBy(this.airObject, "operating_airline");
 
-		console.log(func);
+			function groupItems(obj, passArr, op_air, pas_cnt ){
+				var counter = 0;
+				for(i=0; i< obj.length-1; i++){
+
+					if(obj[i+1][op_air] === obj[i][op_air]){
+						// console.log(obj[i][op_air] + [i]);
+
+						counter = counter + Number(obj[i][pas_cnt]);
+
+
+					}else if(obj[i+1][op_air] !== obj[i][op_air]){
+
+						counter = counter + Number(obj[i][pas_cnt]);
+						passArr.push(counter);
+						counter = 0;
+
+					}
+				}
+				
+			}
+
+
+
+			groupItems(this.airObject, this.passengerCounts, "operating_airline", "passenger_count");
+
+		console.log(this.passengerCounts)
+
+		console.log(this.airObject);
 
 
 		// Clone the data to a newObject, then sort that object and pull info from it. 
@@ -112,7 +139,20 @@ $.ajax({
 
 
 
+// if([i] == 0){
+// 						console.log("hi")
+// 					}else if(obj[i][op_air] === obj[i-1][op_air]){
+// 						// console.log(obj[i][op_air] + [i]);
 
+// 						counter = counter + Number(obj[i][pas_cnt]);
+
+
+// 					}else if(obj[i][op_air] !== obj[i-1][op_air]){
+
+// 						passArr.push(counter);
+// 						counter = 0;
+
+// 					}
 
 
 
